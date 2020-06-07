@@ -33,7 +33,7 @@ exist in the code parameter of the redirected URL. Once the code is
 successfully entered the authentication will complete and the two
 environment variables `OUTREACH_TOKEN` and `OUTREACH_REFRESH` will be
 assigned. `OUTREACH_TOKEN` expires after 120 minutes whereas
-`OUTREACH_REFRESH` **does not expire**
+`OUTREACH_REFRESH` **does not expire**.
 
 ``` r
 # Authenticate -----------------------------------
@@ -80,3 +80,19 @@ IDs: `add_prospect_seq(prospect_id, sequence_id, mailbox_id)`.
 ``` r
 add_prospect_seq(1, 956, 18)
 ```
+
+## Listing Resources
+
+Today there are only two functions for listing resources.
+
+  - `get_sequences()`: to list available sequences
+  - `get_mailboxes()`: to list all user mailboxes.
+
+-----
+
+### In the future:
+
+I am intending to add functions for all `GET` endpoints. Additionally I
+will build a function to add prospects. I plan to keep this package
+limited in scope in an effort to emphasize data entry through the
+dedicated CRM or Outreach.io itself.
