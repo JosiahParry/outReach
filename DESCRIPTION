@@ -1,0 +1,15 @@
+Package: outReach
+Title: An R Interface to Outreach.io
+Version: 0.0.0.9000
+Authors@R: 
+    person(given = "Josiah",
+           family = "Parry",
+           role = c("aut", "cre"),
+           email = "josiah.parry@gmail.com",
+           comment = c(ORCID = "0000-0001-9910-865X"))
+Description: outReach provides an R interface to the Outreach.io Sales Engagement Platform. Utilize outReach for automating and managing your customer engagement in a creative manner. 
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.0

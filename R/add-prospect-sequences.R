@@ -15,7 +15,6 @@ add_prospect_seq <- function(prospect_id, sequence_id, mailbox_id) {
       "Bearer ",
       Sys.getenv("OUTREACH_TOKEN")
     )),
-    verbose(),
     body = list(data = list(
       type = "sequenceState",
       relationships = list(
