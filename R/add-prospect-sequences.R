@@ -3,6 +3,7 @@
 #' @description Adds a prospect to a sequence given a prospect ID and a sequence ID.
 #' @param prospect_id The numeric ID for an Outreach prospect.
 #' @param sequence_id The numeric ID for an Outreach sequence. 
+#' @param mailbox_id The numeric ID for an Outreach user. 
 #' 
 #' @importFrom httr POST add_headers verbose stop_for_status content
 #' @importFrom jsonlite fromJSON
