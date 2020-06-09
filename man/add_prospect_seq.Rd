@@ -10,6 +10,8 @@ add_prospect_seq(prospect_id, sequence_id, mailbox_id)
 \item{prospect_id}{The numeric ID for an Outreach prospect.}
 
 \item{sequence_id}{The numeric ID for an Outreach sequence.}
+
+\item{mailbox_id}{The numeric ID for an Outreach user.}
 }
 \description{
 Adds a prospect to a sequence given a prospect ID and a sequence ID.

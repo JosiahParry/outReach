@@ -27,8 +27,9 @@ get_mailboxes <- function(token = Sys.getenv("OUTREACH_TOKEN")) {
   
   res <- jsonlite::fromJSON(content(mb, as = "text"))
   
-  tibble(res$data$attributes %>% 
-           janitor::clean_names()) %>% 
+  res$data$attributes %>%
+    janitor::clean_names() %>% 
+    as_tibble() %>% 
     select(user_id, email, email_signature, everything())
   
   
