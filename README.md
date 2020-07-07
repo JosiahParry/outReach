@@ -13,6 +13,9 @@ prospects to sequences from R. This functionality enables the creative
 combination and use of a CRM data warehouse and Outreach.io. As such,
 one can utilize the functionality and creativity enabled by R.
 
+outReach can be installed from Github with
+`remotes::install_github("josiahparry/outReach")`
+
 ## Authentication
 
 Outreach.io utilizes OAuth2. Currently, `outReach` does not support
@@ -79,6 +82,48 @@ IDs: `add_prospect_seq(prospect_id, sequence_id, mailbox_id)`.
 
 ``` r
 add_prospect_seq(1, 956, 18)
+```
+
+## Searching for prospects
+
+It is currently possible to search for your prospects using the
+`search_prospects()` function. The function is currently quite limited.
+`search_prospects()` allows you to query the Outreach API for prospects
+(up to 1000 as of right now) based on the owner ID or email, account
+name, or tag. For each of these arguments you can provide a vector of
+length \> 0. If you provide, for example, a vector with two tags it will
+return prospects that match at least one of the conditions. The function
+returns a (rather messy) list object. In the resultant object is a list
+called `data` with the element `id` that contains the prospect IDs from
+the search.
+
+## Motivating Example
+
+The below example is some started code that demonstrates authenticating
+outreach, searching for prospects based on a tag, and then adding them
+all to a sequence.
+
+``` r
+remotes::install_github("josiahparry/outReach")
+
+library(outReach)
+
+app_id <- "your-outreach-app-id"
+secret <- "your-secret"
+callback <- "https://callback.com/"
+safe_scopes <- "sequenceStates.read sequenceStates.write mailboxes.read prospects.read sequences.read"
+
+# initial authentication. 
+outreach_auth(app_id, secret, callback, safe_scopes)
+
+# search for prospects with the awesome-prospects tag
+prospects <- search_prospects(tag = "awesome-prospects")
+
+# iterate over all of the prospects and add them to a sequence
+purrr::map(
+  .x = prospects$data$id,
+  ~add_prospect_seq(.x, sequence_id = 1, mailbox_id = 5)
+)
 ```
 
 ## Listing Resources

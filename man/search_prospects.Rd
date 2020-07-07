@@ -24,5 +24,10 @@ search_prospects(
 \item{token}{Your Outreach.io token which should be stored in the environment variable \code{OUTEREACH_TOKEN} if authentication was done with \code{outreach_auth()}}
 }
 \description{
-Search Outreach.io prospects.
+\code{search_prospects()} allows you to query the Outreach API for prospects (up to 1000 as of right now) based on the owner ID or email, account name, or tag. For each of these arguments you can provide a vector of length > 0. If you provide, for example, a vector with two tags it will return prospects that match at least one of the conditions.
+}
+\examples{
+search_prospects(owner_email = "josiah@rstudio.com")
+search_prospect(tag = c("my-favorite-prospects", "okay-prospects"))
+
 }
