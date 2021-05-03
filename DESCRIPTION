@@ -18,4 +18,5 @@ Imports:
     tibble,
     dplyr,
     httr,
-    jsonlite
+    jsonlite,
+    magrittr

@@ -10,9 +10,9 @@
 #' @importFrom httr GET add_headers content
 #' @importFrom jsonlite fromJSON 
 #' @importFrom tibble tibble
-#' @importFrom dplyr select
+#' @importFrom dplyr select bind_rows
 #' @importFrom janitor clean_names
-#'
+#' @importFrom purrr map map_dfr
 #' @examples
 #' 
 #' \dontrun{
@@ -24,15 +24,37 @@ get_mailboxes <- function(token = Sys.getenv("OUTREACH_TOKEN")) {
   mb <- GET("https://api.outreach.io/api/v2/mailboxes",
             add_headers(`Authorization` = paste0("Bearer ", token))) 
   
+  res <- jsonlite::fromJSON(content(q, as = "text"))
   
-  res <- jsonlite::fromJSON(content(mb, as = "text"))
+  n_pages <- ceiling(res$meta$count/50)
   
+  init_res <- tidy_mb(res)
+  
+  if (n_pages > 1) {
+    query_urls <- glue::glue("https://api.outreach.io/api/v2/mailboxes?page%5Boffset%5D={1:(n_pages-1) * 50}")  
+    pages <- purrr::map(query_urls, ~httr::GET(.x, add_headers(`Authorization` = paste0("Bearer ", token)), encode = "json"))
+    
+    new_res <- map(pages, ~jsonlite::fromJSON(content(.x, as = "text"))) %>% 
+      map_dfr(tidy_mb)
+    
+    bind_rows(init_res, new_res)
+  } 
+  
+  init_res
+  
+}
+
+#' @importFrom tibble as_tibble
+#' @importFrom dplyr select
+#' @keywords internal
+tidy_mb <- function(res) {
+
   res$data$attributes %>%
     janitor::clean_names() %>% 
     as_tibble() %>% 
     select(user_id, email, email_signature, everything())
   
-  
 }
+
 
  
