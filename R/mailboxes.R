@@ -24,7 +24,7 @@ get_mailboxes <- function(token = Sys.getenv("OUTREACH_TOKEN")) {
   mb <- GET("https://api.outreach.io/api/v2/mailboxes",
             add_headers(`Authorization` = paste0("Bearer ", token))) 
   
-  res <- jsonlite::fromJSON(content(q, as = "text"))
+  res <- jsonlite::fromJSON(content(mb, as = "text"))
   
   n_pages <- ceiling(res$meta$count/50)
   
@@ -37,7 +37,7 @@ get_mailboxes <- function(token = Sys.getenv("OUTREACH_TOKEN")) {
     new_res <- map(pages, ~jsonlite::fromJSON(content(.x, as = "text"))) %>% 
       map_dfr(tidy_mb)
     
-    bind_rows(init_res, new_res)
+    return(bind_rows(init_res, new_res))
   } 
   
   init_res
