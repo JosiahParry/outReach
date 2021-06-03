@@ -45,7 +45,7 @@ get_mailboxes <- function(token = Sys.getenv("OUTREACH_TOKEN")) {
 }
 
 #' @importFrom tibble as_tibble
-#' @importFrom dplyr select
+#' @importFrom dplyr select mutate
 #' @keywords internal
 tidy_mb <- function(res) {
 
