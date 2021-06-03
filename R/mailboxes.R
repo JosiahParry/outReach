@@ -52,9 +52,7 @@ tidy_mb <- function(res) {
   res$data$attributes %>%
     janitor::clean_names() %>% 
     as_tibble() %>% 
-    select(user_id, email, email_signature, everything())
-  
+    mutate(mailbox_id = res$data$id) %>% 
+    select(mailbox_id, user_id, email, email_signature, everything()) 
 }
 
-
- 
